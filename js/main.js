@@ -13,3 +13,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+function toggleDarkMode() {
+    document.body.classList.toggle('dark');
+    const btn = document.getElementById('darkModeBtn');
+    if (document.body.classList.contains('dark')) {
+        btn.textContent = 'Light Mode';
+        localStorage.setItem('theme', 'dark');
+    } else {
+        btn.textContent = 'Dark Mode';
+        localStorage.setItem('theme', 'light');
+    }
+}
+
+window.onload = function() {
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark');
+        const btn = document.getElementById('darkModeBtn');
+        if (btn) btn.textContent = 'Light Mode';
+    }
+};

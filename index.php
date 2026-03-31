@@ -38,6 +38,7 @@ $total = mysqli_num_rows($result);
         <a href="post_notice.php">Post Notice</a>
         <a href="contact.php">Contact</a>
         <a href="about.php">About</a>
+        <button onclick="toggleDarkMode()" id="darkModeBtn" class="dark-btn">Dark Mode</button>
     </div>
 </nav>
 

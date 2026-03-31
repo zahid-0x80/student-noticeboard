@@ -296,3 +296,60 @@ h1 {
 .navbar .nav-links a:hover {
     text-decoration: underline;
 }
+
+
+/* Dark Mode */
+.dark-btn {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.dark-btn:hover {
+    background-color: white;
+    color: #2c3e50;
+}
+
+body.dark {
+    background-color: #1a1a2e;
+    color: #eee;
+}
+
+body.dark .notice-card {
+    background-color: #16213e;
+    color: #eee;
+}
+
+body.dark .notice-card h2 {
+    color: #eee;
+}
+
+body.dark .about-box {
+    background-color: #16213e;
+    color: #eee;
+}
+
+body.dark .notice-form {
+    background-color: #16213e;
+    color: #eee;
+}
+
+body.dark .notice-form input,
+body.dark .notice-form textarea,
+body.dark .notice-form select {
+    background-color: #1a1a2e;
+    color: #eee;
+    border-color: #444;
+}
+
+body.dark h1 {
+    color: #eee;
+}
+
+body.dark .uni-header h3 {
+    color: #eee;
+}
