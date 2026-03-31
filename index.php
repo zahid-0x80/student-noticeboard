@@ -2,16 +2,23 @@
 include 'db.php';
 
 $search = "";
-if (isset($_GET['search'])) {
-    $search = mysqli_real_escape_string($conn, $_GET['search']);
-}
+$category = "";
+$sort = "newest";
 
-if ($search != "") {
-    $result = mysqli_query($conn, "SELECT * FROM notices WHERE title LIKE '%$search%' OR message LIKE '%$search%' ORDER BY created_at DESC");
+if (isset($_GET['search'])) $search = mysqli_real_escape_string($conn, $_GET['search']);
+if (isset($_GET['category'])) $category = mysqli_real_escape_string($conn, $_GET['category']);
+if (isset($_GET['sort']) && $_GET['sort'] == 'oldest') {
+    $sort = 'ASC';
 } else {
-    $result = mysqli_query($conn, "SELECT * FROM notices ORDER BY created_at DESC");
+    $sort = 'DESC';
 }
 
+$query = "SELECT * FROM notices WHERE 1=1";
+if ($search != "") $query .= " AND (title LIKE '%$search%' OR message LIKE '%$search%')";
+if ($category != "") $query .= " AND category = '$category'";
+$query .= " ORDER BY created_at $sort";
+
+$result = mysqli_query($conn, $query);
 $total = mysqli_num_rows($result);
 ?>
 
@@ -38,10 +45,19 @@ $total = mysqli_num_rows($result);
 
 <form method="GET" class="search-form">
     <input type="text" name="search" placeholder="Search notices..." value="<?php echo htmlspecialchars($search); ?>">
+    <select name="category">
+        <option value="">All Categories</option>
+        <option value="general" <?php echo (isset($_GET['category']) && $_GET['category'] == 'general') ? 'selected' : ''; ?>>General</option>
+        <option value="exam" <?php echo (isset($_GET['category']) && $_GET['category'] == 'exam') ? 'selected' : ''; ?>>Exam</option>
+        <option value="event" <?php echo (isset($_GET['category']) && $_GET['category'] == 'event') ? 'selected' : ''; ?>>Event</option>
+        <option value="result" <?php echo (isset($_GET['category']) && $_GET['category'] == 'result') ? 'selected' : ''; ?>>Result</option>
+    </select>
+    <select name="sort">
+        <option value="newest" <?php echo (isset($_GET['sort']) && $_GET['sort'] == 'newest') ? 'selected' : ''; ?>>Newest</option>
+        <option value="oldest" <?php echo (isset($_GET['sort']) && $_GET['sort'] == 'oldest') ? 'selected' : ''; ?>>Oldest</option>
+    </select>
     <button type="submit" class="btn">Search</button>
-    <?php if ($search != ""): ?>
-        <a href="index.php" class="btn btn-secondary">Clear</a>
-    <?php endif; ?>
+    <a href="index.php" class="btn btn-secondary">Clear</a>
 </form>
 
     <div class="notices">
