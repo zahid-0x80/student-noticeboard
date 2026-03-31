@@ -111,3 +111,77 @@ h1 {
     font-size: 15px;
     margin-top: 4px;
 }
+
+.notice-form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.notice-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.notice-form input[type="text"],
+.notice-form input[type="date"],
+.notice-form textarea,
+.notice-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.notice-form textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+.char-count {
+    display: block;
+    text-align: right;
+    color: #888;
+    margin-bottom: 15px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+}
+
+.btn-secondary {
+    background-color: #888;
+    margin-left: 10px;
+}
+
+.btn-secondary:hover {
+    background-color: #666;
+}
+
+.msg {
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
