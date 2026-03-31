@@ -1,6 +1,18 @@
 <?php
 include 'db.php';
-$result = mysqli_query($conn, "SELECT * FROM notices ORDER BY created_at DESC");
+
+$search = "";
+if (isset($_GET['search'])) {
+    $search = mysqli_real_escape_string($conn, $_GET['search']);
+}
+
+if ($search != "") {
+    $result = mysqli_query($conn, "SELECT * FROM notices WHERE title LIKE '%$search%' OR message LIKE '%$search%' ORDER BY created_at DESC");
+} else {
+    $result = mysqli_query($conn, "SELECT * FROM notices ORDER BY created_at DESC");
+}
+
+$total = mysqli_num_rows($result);
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +31,18 @@ $result = mysqli_query($conn, "SELECT * FROM notices ORDER BY created_at DESC");
     <p>Department of Software Engineering</p>
 </div>
 <h1>Student Noticeboard</h1>
+    <div class="top-bar">
     <a href="post_notice.php" class="btn">Post a Notice</a>
+    <p class="notice-count">Total Notices: <?php echo $total; ?></p>
+</div>
+
+<form method="GET" class="search-form">
+    <input type="text" name="search" placeholder="Search notices..." value="<?php echo htmlspecialchars($search); ?>">
+    <button type="submit" class="btn">Search</button>
+    <?php if ($search != ""): ?>
+        <a href="index.php" class="btn btn-secondary">Clear</a>
+    <?php endif; ?>
+</form>
 
     <div class="notices">
         <?php if (mysqli_num_rows($result) == 0): ?>
