@@ -80,10 +80,16 @@ $total = mysqli_num_rows($result);
                     <p><?php echo htmlspecialchars($row['message']); ?></p>
                     <small>Category: <?php echo $row['category']; ?></small>
                     <small>Posted: <?php echo $row['created_at']; ?></small>
-                    <div class="actions">
+                    <!-- <div class="actions">
                         <a href="edit_notice.php?id=<?php echo $row['id']; ?>">Edit</a>
                         <a href="delete_notice.php?id=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
-                    </div>
+                    </div> -->
+                        <div class="actions">
+                            <a href="edit_notice.php?id=<?php echo $row['id']; ?>">Edit</a>
+                            <a href="delete_notice.php?id=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                            <button onclick="copyNotice('<?php echo addslashes($row['title']); ?>', '<?php echo addslashes($row['message']); ?>')" class="action-btn">Copy</button>
+                            <button onclick="printNotice('<?php echo addslashes($row['title']); ?>', '<?php echo addslashes($row['message']); ?>')" class="action-btn">Print</button>
+                        </div>
                 </div>
             <?php endwhile; ?>
         <?php endif; ?>

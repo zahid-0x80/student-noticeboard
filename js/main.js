@@ -33,3 +33,18 @@ window.onload = function() {
         if (btn) btn.textContent = 'Light Mode';
     }
 };
+
+
+function copyNotice(title, message) {
+    const text = title + '\n\n' + message;
+    navigator.clipboard.writeText(text).then(function() {
+        alert('Notice copied to clipboard!');
+    });
+}
+
+function printNotice(title, message) {
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write('<h2>' + title + '</h2><p>' + message + '</p>');
+    printWindow.document.close();
+    printWindow.print();
+}
