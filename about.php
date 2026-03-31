@@ -7,7 +7,15 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
+<nav class="navbar">
+    <a href="index.php" class="nav-brand">Student Noticeboard</a>
+    <div class="nav-links">
+        <a href="index.php">Home</a>
+        <a href="post_notice.php">Post Notice</a>
+        <a href="contact.php">Contact</a>
+        <a href="about.php">About</a>
+    </div>
+</nav>
 <div class="container">
     <div class="uni-header">
         <h3>Daffodil International University</h3>
