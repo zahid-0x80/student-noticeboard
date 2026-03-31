@@ -32,13 +32,6 @@
         <p>Group 5 | Batch 41 | Section L</p>
         <p>Department of Software Engineering, Daffodil International University</p>
 
-        <ul class="team-list">
-            <li>Abdullah Al Mujahid</li>
-            <li>Nafisul Islam Fuad</li>
-            <li>Sabreena Jahan</li>
-            <li>Zahid Hasan</li>
-        </ul>
-
         <a href="index.php" class="btn">Back to Board</a>
     </div>
 </div>

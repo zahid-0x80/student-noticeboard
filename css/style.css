@@ -127,6 +127,7 @@ h1 {
 }
 
 .notice-form input[type="text"],
+.notice-form input[type="email"],
 .notice-form input[type="date"],
 .notice-form textarea,
 .notice-form select {
@@ -214,7 +215,7 @@ h1 {
 }
 
 /* Test */
-
+/* 
 .team-list {
     list-style: none;
     margin-top: 10px;
@@ -225,7 +226,7 @@ h1 {
     border-bottom: 1px solid #eee;
     color: #2c3e50;
     font-size: 16px;
-}
+} */
 
 
 /* css for about page */
@@ -251,7 +252,7 @@ h1 {
 
 /* test 2 */
 
-.team-list {
+/* .team-list {
     list-style: none;
     padding: 0;
     margin-bottom: 20px;
@@ -261,4 +262,7 @@ h1 {
     padding: 8px 0;
     border-bottom: 1px solid #eee;
     color: #555;
-}
+} */
+
+
+/* Email field */
