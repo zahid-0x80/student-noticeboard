@@ -48,3 +48,40 @@ function printNotice(title, message) {
     printWindow.document.close();
     printWindow.print();
 }
+
+
+function toggleChat() {
+    const body = document.getElementById('chatBody');
+    body.classList.toggle('open');
+}
+
+function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const messages = document.getElementById('chatMessages');
+    const question = input.value.trim();
+
+    if (question === '') return;
+
+    messages.innerHTML += '<div class="chat-msg user">' + question + '</div>';
+    input.value = '';
+    messages.innerHTML += '<div class="chat-msg bot">Thinking...</div>';
+    messages.scrollTop = messages.scrollHeight;
+
+    fetch('ai_chat.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: question })
+    })
+    .then(res => res.json())
+    .then(data => {
+        const allMsgs = messages.querySelectorAll('.chat-msg.bot');
+        allMsgs[allMsgs.length - 1].textContent = data.reply;
+        messages.scrollTop = messages.scrollHeight;
+    });
+}
+
+document.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter' && document.getElementById('chatInput') === document.activeElement) {
+        sendMessage();
+    }
+});

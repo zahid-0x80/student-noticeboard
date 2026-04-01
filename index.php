@@ -95,6 +95,20 @@ $total = mysqli_num_rows($result);
         <?php endif; ?>
     </div>
 </div>
+ <div class="chatbox">
+    <div class="chat-header" onclick="toggleChat()">
+        AI Assistant - Ask about notices
+    </div>
+    <div class="chat-body" id="chatBody">
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg bot">Hello! Ask me anything about the notices on this board.</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Ask a question...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
 
 <script src="js/main.js"></script>
 </body>
