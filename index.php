@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'db.php';
 
 $search = "";
@@ -35,40 +36,50 @@ $total = mysqli_num_rows($result);
     <a href="index.php" class="nav-brand">Student Noticeboard</a>
     <div class="nav-links">
         <a href="index.php">Home</a>
-        <a href="post_notice.php">Post Notice</a>
+        <?php if (isset($_SESSION['user'])): ?>
+            <a href="post_notice.php">Post Notice</a>
+        <?php endif; ?>
         <a href="contact.php">Contact</a>
         <a href="about.php">About</a>
+        <?php if (isset($_SESSION['user'])): ?>
+            <span style="color:white;">Hi, <?php echo $_SESSION['user']; ?></span>
+            <a href="logout.php" style="color:white;">Logout</a>
+        <?php else: ?>
+            <a href="login.php" style="color:white;">Teacher Login</a>
+        <?php endif; ?>
         <button onclick="toggleDarkMode()" id="darkModeBtn" class="dark-btn">Dark Mode</button>
     </div>
 </nav>
 
 <div class="container">
     <div class="uni-header">
-    <h3>Daffodil International University</h3>
-    <p>Department of Software Engineering</p>
-</div>
-<h1>Student Noticeboard</h1>
+        <h3>Daffodil International University</h3>
+        <p>Department of Software Engineering</p>
+    </div>
+    <h1>Student Noticeboard</h1>
     <div class="top-bar">
-    <a href="post_notice.php" class="btn">Post a Notice</a>
-    <p class="notice-count">Total Notices: <?php echo $total; ?></p>
-</div>
+        <?php if (isset($_SESSION['user'])): ?>
+            <a href="post_notice.php" class="btn">Post a Notice</a>
+        <?php endif; ?>
+        <p class="notice-count">Total Notices: <?php echo $total; ?></p>
+    </div>
 
-<form method="GET" class="search-form">
-    <input type="text" name="search" placeholder="Search notices..." value="<?php echo htmlspecialchars($search); ?>">
-    <select name="category">
-        <option value="">All Categories</option>
-        <option value="general" <?php echo (isset($_GET['category']) && $_GET['category'] == 'general') ? 'selected' : ''; ?>>General</option>
-        <option value="exam" <?php echo (isset($_GET['category']) && $_GET['category'] == 'exam') ? 'selected' : ''; ?>>Exam</option>
-        <option value="event" <?php echo (isset($_GET['category']) && $_GET['category'] == 'event') ? 'selected' : ''; ?>>Event</option>
-        <option value="result" <?php echo (isset($_GET['category']) && $_GET['category'] == 'result') ? 'selected' : ''; ?>>Result</option>
-    </select>
-    <select name="sort">
-        <option value="newest" <?php echo (isset($_GET['sort']) && $_GET['sort'] == 'newest') ? 'selected' : ''; ?>>Newest</option>
-        <option value="oldest" <?php echo (isset($_GET['sort']) && $_GET['sort'] == 'oldest') ? 'selected' : ''; ?>>Oldest</option>
-    </select>
-    <button type="submit" class="btn">Search</button>
-    <a href="index.php" class="btn btn-secondary">Clear</a>
-</form>
+    <form method="GET" class="search-form">
+        <input type="text" name="search" placeholder="Search notices..." value="<?php echo htmlspecialchars($search); ?>">
+        <select name="category">
+            <option value="">All Categories</option>
+            <option value="general" <?php echo (isset($_GET['category']) && $_GET['category'] == 'general') ? 'selected' : ''; ?>>General</option>
+            <option value="exam" <?php echo (isset($_GET['category']) && $_GET['category'] == 'exam') ? 'selected' : ''; ?>>Exam</option>
+            <option value="event" <?php echo (isset($_GET['category']) && $_GET['category'] == 'event') ? 'selected' : ''; ?>>Event</option>
+            <option value="result" <?php echo (isset($_GET['category']) && $_GET['category'] == 'result') ? 'selected' : ''; ?>>Result</option>
+        </select>
+        <select name="sort">
+            <option value="newest" <?php echo (isset($_GET['sort']) && $_GET['sort'] == 'newest') ? 'selected' : ''; ?>>Newest</option>
+            <option value="oldest" <?php echo (isset($_GET['sort']) && $_GET['sort'] == 'oldest') ? 'selected' : ''; ?>>Oldest</option>
+        </select>
+        <button type="submit" class="btn">Search</button>
+        <a href="index.php" class="btn btn-secondary">Clear</a>
+    </form>
 
     <div class="notices">
         <?php if (mysqli_num_rows($result) == 0): ?>
@@ -80,22 +91,21 @@ $total = mysqli_num_rows($result);
                     <p><?php echo htmlspecialchars($row['message']); ?></p>
                     <small>Category: <?php echo $row['category']; ?></small>
                     <small>Posted: <?php echo $row['created_at']; ?></small>
-                    <!-- <div class="actions">
-                        <a href="edit_notice.php?id=<?php echo $row['id']; ?>">Edit</a>
-                        <a href="delete_notice.php?id=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
-                    </div> -->
-                        <div class="actions">
+                    <div class="actions">
+                        <?php if (isset($_SESSION['user'])): ?>
                             <a href="edit_notice.php?id=<?php echo $row['id']; ?>">Edit</a>
                             <a href="delete_notice.php?id=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
-                            <button onclick="copyNotice('<?php echo addslashes($row['title']); ?>', '<?php echo addslashes($row['message']); ?>')" class="action-btn">Copy</button>
-                            <button onclick="printNotice('<?php echo addslashes($row['title']); ?>', '<?php echo addslashes($row['message']); ?>')" class="action-btn">Print</button>
-                        </div>
+                        <?php endif; ?>
+                        <button onclick="copyNotice('<?php echo addslashes($row['title']); ?>', '<?php echo addslashes($row['message']); ?>')" class="action-btn">Copy</button>
+                        <button onclick="printNotice('<?php echo addslashes($row['title']); ?>', '<?php echo addslashes($row['message']); ?>')" class="action-btn">Print</button>
+                    </div>
                 </div>
             <?php endwhile; ?>
         <?php endif; ?>
     </div>
 </div>
- <div class="chatbox">
+
+<div class="chatbox">
     <div class="chat-header" onclick="toggleChat()">
         AI Assistant - Ask about notices
     </div>
