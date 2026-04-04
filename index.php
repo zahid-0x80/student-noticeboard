@@ -41,6 +41,7 @@ $total = mysqli_num_rows($result);
         <?php endif; ?>
         <a href="contact.php">Contact</a>
         <a href="about.php">About</a>
+        <a href="register_email.php" style="color:white;">Get Notifications</a>
         <?php if (isset($_SESSION['user'])): ?>
             <span style="color:white;">Hi, <?php echo $_SESSION['user']; ?></span>
             <a href="logout.php" style="color:white;">Logout</a>

@@ -5,6 +5,7 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 include 'db.php';
+include 'send_notification.php';
 
 $error = "";
 $success = "";
@@ -24,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         if (mysqli_query($conn, $query)) {
             $success = "Notice posted successfully!";
+            sendNotificationEmails($title, $message, $category);
         } else {
             $error = "Something went wrong. Please try again.";
         }
@@ -42,12 +44,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 <nav class="navbar">
     <a href="index.php" class="nav-brand">Student Noticeboard</a>
-    <div class="nav-links">
-        <a href="index.php">Home</a>
-        <a href="post_notice.php">Post Notice</a>
-        <a href="contact.php">Contact</a>
-        <a href="about.php">About</a>
-    </div>
+<div class="nav-links">
+    <a href="index.php">Home</a>
+    <a href="post_notice.php">Post Notice</a>
+    <a href="contact.php">Contact</a>
+    <a href="about.php">About</a>
+    <span style="color:white;">Hi, <?php echo $_SESSION['user']; ?></span>
+    <a href="logout.php" style="color:white;">Logout</a>
+    <button onclick="toggleDarkMode()" id="darkModeBtn" class="dark-btn">Dark Mode</button>
+</div>
 </nav>
 
 <div class="container">
