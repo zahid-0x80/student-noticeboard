@@ -1,0 +1,224 @@
+===================================================
+STUDENT NOTICEBOARD - SETUP GUIDE
+===================================================
+
+This guide will help you run the project on your computer.
+Follow the steps one by one carefully.
+
+===================================================
+OPTION 1: WINDOWS USERS (Using WSL Ubuntu)
+===================================================
+
+We recommend using WSL Ubuntu because it is cleaner
+and works better with PHP projects.
+
+---------------------------------------------------
+STEP 1: Install WSL Ubuntu
+---------------------------------------------------
+1. Open PowerShell as Administrator
+2. Run this command:
+   wsl --install
+3. Restart your computer
+4. After restart, Ubuntu will open and ask you to
+   create a username and password
+5. Remember this password, you will need it later
+
+---------------------------------------------------
+STEP 2: Install PHP and MySQL
+---------------------------------------------------
+Open Ubuntu and run these commands one by one:
+
+sudo apt update
+sudo apt install php -y
+sudo apt install php-mysqli -y
+sudo apt install php-curl -y
+sudo apt install mysql-server -y
+
+---------------------------------------------------
+STEP 3: Install Git and Composer
+---------------------------------------------------
+sudo apt install git -y
+sudo apt install composer -y
+
+---------------------------------------------------
+STEP 4: Start MySQL
+---------------------------------------------------
+sudo service mysql start
+
+Then open MySQL:
+sudo mysql
+
+Then run this inside MySQL:
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password123';
+FLUSH PRIVILEGES;
+EXIT;
+
+---------------------------------------------------
+STEP 5: Create the Database
+---------------------------------------------------
+Open MySQL with this command:
+mysql -u root -ppassword123
+
+Then paste this inside MySQL:
+
+CREATE DATABASE noticeboard;
+USE noticeboard;
+
+CREATE TABLE notices (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    category VARCHAR(100) DEFAULT 'general',
+    is_important TINYINT(1) DEFAULT 0,
+    expiry_date DATE DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE contacts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(50) DEFAULT 'teacher',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE student_emails (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO users (username, password, role) VALUES ('teacher', MD5('teacher123'), 'teacher');
+
+EXIT;
+
+---------------------------------------------------
+STEP 6: Clone the Project
+---------------------------------------------------
+cd ~
+mkdir SE321
+cd SE321
+git clone https://github.com/zahid-0x80/student-noticeboard.git
+cd student-noticeboard
+
+---------------------------------------------------
+STEP 7: Install PHPMailer
+---------------------------------------------------
+composer require phpmailer/phpmailer
+
+---------------------------------------------------
+STEP 8: Create config.php
+---------------------------------------------------
+This file is not on GitHub for security reasons.
+You have to create it manually.
+
+Create a file called config.php in the project folder
+and paste this inside:
+
+<?php
+define('GROQ_API_KEY', 'ASK ME FOR THE API KEY');
+define('GMAIL_ADDRESS', 'ASK ME FOR THE GMAIL');
+define('GMAIL_APP_PASSWORD', 'ASK ME FOR THE PASSWORD');
+?>
+
+---------------------------------------------------
+STEP 9: Run the Project
+---------------------------------------------------
+Make sure MySQL is running:
+sudo service mysql start
+
+Then start the PHP server:
+php -S localhost:8000
+
+Then open your browser and go to:
+http://localhost:8000
+
+---------------------------------------------------
+TEACHER LOGIN DETAILS
+---------------------------------------------------
+Username: teacher
+Password: teacher123
+
+===================================================
+OPTION 2: WINDOWS USERS (Using XAMPP)
+===================================================
+
+If you do not want to use WSL, you can use XAMPP.
+
+---------------------------------------------------
+STEP 1: Install XAMPP
+---------------------------------------------------
+1. Go to: apachefriends.org
+2. Download XAMPP for Windows
+3. Install with all default settings
+
+---------------------------------------------------
+STEP 2: Install Git
+---------------------------------------------------
+1. Go to: git-scm.com
+2. Download Git for Windows
+3. Install with all default settings
+
+---------------------------------------------------
+STEP 3: Clone the Project
+---------------------------------------------------
+1. Open Git Bash
+2. Run this command:
+git clone https://github.com/zahid-0x80/student-noticeboard.git "C:\xampp\htdocs\student-noticeboard"
+
+---------------------------------------------------
+STEP 4: Start XAMPP
+---------------------------------------------------
+1. Open XAMPP Control Panel
+2. Click Start next to Apache
+3. Click Start next to MySQL
+
+---------------------------------------------------
+STEP 5: Create the Database
+---------------------------------------------------
+1. Open browser and go to: http://localhost/phpmyadmin
+2. Click New on the left side
+3. Type: noticeboard
+4. Click Create
+5. Click on noticeboard database
+6. Click SQL tab
+7. Paste the CREATE TABLE queries from STEP 5 above
+8. Click Go
+
+---------------------------------------------------
+STEP 6: Create config.php
+---------------------------------------------------
+1. Go to: C:\xampp\htdocs\student-noticeboard
+2. Create a new file called config.php
+3. Open with Notepad and paste:
+
+<?php
+define('GROQ_API_KEY', 'ASK ME FOR THE API KEY');
+define('GMAIL_ADDRESS', 'ASK ME FOR THE GMAIL');
+define('GMAIL_APP_PASSWORD', 'ASK ME FOR THE PASSWORD');
+?>
+
+Note: XAMPP MySQL password is empty by default.
+Open db.php and make sure password is set to ""
+
+---------------------------------------------------
+STEP 7: Open the Project
+---------------------------------------------------
+Open browser and go to:
+http://localhost/student-noticeboard
+
+---------------------------------------------------
+TEACHER LOGIN DETAILS
+---------------------------------------------------
+Username: teacher
+Password: teacher123
+
+===================================================
